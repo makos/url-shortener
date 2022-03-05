@@ -1,25 +1,56 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import UrlForm from './UrlForm.js';
+import Link from './Link.js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      longLink: '',
+      shortLink: ''
+    };
+
+    this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+
+  handleFormChange(link) {
+    this.setState({longLink: link});
+  }
+
+  handleFormSubmit() {
+    fetch('http://localhost:3001', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({longLink: this.state.longLink}),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        this.setState({shortLink: data.shortLink});
+      })
+      .catch((error) => console.error('Error:', error));
+  }
+  
+  render() {
+    return (
+      <div className="app">
+        <header className="app-header">
+          <h1>Short It</h1>
+        </header>
+        <div className="app-body">
+          <Link shortLink={this.state.shortLink}/>
+          <UrlForm
+            onFormChange={this.handleFormChange}
+            onFormSubmit={this.handleFormSubmit}
+          />
+        </div>
+      </div>
+    );    
+  }
 }
 
 export default App;
