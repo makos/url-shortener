@@ -1,8 +1,11 @@
+import process from 'process';
+
 const express = require('express');
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 const mysql = require('mysql');
 
+/* TODO: Config file with all those things inside environment variables. */
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'shorter',
@@ -23,11 +26,10 @@ app.get('/:urlId', (req, res) => {
 
       console.log("Result:", result);
 
-      if (result[0]) {
-        res.status(200).json(result[0].URL);
-      } else {
-        res.status(404).json({status: "No URL with given ID."});
-      }
+      const hasUrl = result.length;
+      res
+        .status(hasUrl ? 200 : 404)
+        .json(hasUrl ? result[0].URL : {status: "No URL with given ID."});
     });
 });
 
@@ -40,7 +42,6 @@ app.post('/', (req, res) => {
       if (err) throw err;
 
       console.log("Result:", result);
-      console.log("ID: ", result.insertId);
       
       res.status(200).json({shortLink: `myshorter.com/${result.insertId}`});
     }
