@@ -32,7 +32,10 @@ class App extends React.Component {
         console.log('Success:', data);
         this.setState({shortLink: data.shortLink});
       })
-      .catch((error) => console.error('Error:', error));
+      .catch((error) => {
+        console.error('Error:', error);
+        this.setState({shortLink: "Something went wrong. Try again!"});
+      });
   }
   
   render() {
