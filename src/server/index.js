@@ -2,6 +2,7 @@ const process = require('process');
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
+const uri = require('node-uri');
 const port = process.env.PORT || 3001;
 
 const config = require('./config.js');
@@ -31,14 +32,14 @@ app.get('/:urlId', (req, res) => {
       if (hasUrl) {
         res.redirect(301, result[0].longLink);
       } else {
-        res4.status(404).json({status: "No URL with given ID."});
+        res4.status(404).json({status: 'No URL with given ID.'});
       }
     });
 });
 
 app.post('/', (req, res) => {
   /* TODO: Remove console logging after dev. */
-  console.log("Received request with body: ", req.body);
+  console.log('Received request with body:' , req.body);
   /* TODO: URL validation; has the user sent in a valid URL? */
   connection.query(
     'INSERT INTO URLS SET ?',
