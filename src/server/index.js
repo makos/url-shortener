@@ -6,7 +6,6 @@ const port = process.env.PORT || 3001;
 
 const config = require('./config.js');
 
-/* TODO: Config file with all those things inside environment variables. */
 const connection = mysql.createConnection({
   host: config.db_host,
   user: config.db_user,
@@ -26,20 +25,30 @@ app.get('/:urlId', (req, res) => {
       if (err) throw err;
 
       const hasUrl = result.length;
-      res
-        .status(hasUrl ? 200 : 404)
-        .json(hasUrl ? result[0].longLink : {status: "No URL with given ID."});
+      /* TODO: URL checking; don't try to redirect to invalid HTTP address!
+         Maybe only need to be checked in the POST route? If it passes there we
+         can assume it's valid here. */
+      if (hasUrl) {
+        res.redirect(301, result[0].longLink);
+      } else {
+        res4.status(404).json({status: "No URL with given ID."});
+      }
     });
 });
 
 app.post('/', (req, res) => {
+  /* TODO: Remove console logging after dev. */
   console.log("Received request with body: ", req.body);
+  /* TODO: URL validation; has the user sent in a valid URL? */
   connection.query(
     'INSERT INTO URLS SET ?',
     [req.body],
     (err, result, fields) => {
+      /* TODO: Error handling. */
       if (err) throw err;
-      res.status(200).json({shortLink: `myshorter.com/${result.insertId}`});
+      /* TODO: Dev / debug stuff. */
+      
+      res.status(200).json({shortLink: `${req.hostname}/${result.insertId}`});
     }
   );
 });
