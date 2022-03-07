@@ -44,6 +44,7 @@ class App extends React.Component {
         <header className="app-header">
           <h1>Short It</h1>
         </header>
+        <div className="empty-row"></div>
         <div className="app-body">
           <Link shortLink={this.state.shortLink} className="link-container"/>
           <UrlForm

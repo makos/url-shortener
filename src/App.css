@@ -1,9 +1,48 @@
+h1 {
+  /* font-size: 100%; */
+}
+
 .app {
   color: white;
+  font-size: calc(10px + 2vmin);
+}
+
+.empty-row {
+  height: 0;
+
+  transition: height 1s;
+}
+
+.app-body {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.app-header {
+  margin-top: 10px;
+  text-align: center;
+  padding-left: 0;
+}
+
+@media screen and (min-width: 300px) {
+  .app-header {
+    text-align: left;
+    padding-left: 15px;
+    margin-top: 0;
+  }
+}
+
+@media screen and (min-width: 660px) {
+  .empty-row {
+    height: 100px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .empty-row {
+    height: 200px;
+  }
 }
