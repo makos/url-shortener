@@ -27,14 +27,19 @@ class App extends React.Component {
       },
       body: JSON.stringify({ longLink: this.state.longLink }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Server error.");
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log("Success:", data);
         this.setState({ shortLink: data.shortLink });
       })
       .catch((error) => {
-        console.error("Error:", error);
-        this.setState({ shortLink: "Something went wrong. Try again!" });
+        console.error(error);
+        this.setState({ shortLink: "Server error. Please try again."});
       });
   }
 
