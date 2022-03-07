@@ -5,9 +5,10 @@ button {
   border: none;
   border-radius: 5px;
   color: #444;
-  margin: 5px 0;
+  margin: 5px auto;
   padding: 5px 0;
-
+  text-align: center;
+  
   transition: width 1s;
 }
 
@@ -41,10 +42,12 @@ form {
 
 .mq-text {
   display: inline-block;
+  margin: auto;
 }
 
 .mq-icon {
-  display: none;  
+  display: none;
+  margin: auto;
 }
 
 @media screen and (min-width: 300px) {
@@ -96,6 +99,11 @@ form {
 @media screen and (min-width: 1024px) {
   form {
     width: 50vw;
+    height: 4vh;
+  }
+
+  input {
+    height: 4vh;
   }
 }
 

@@ -47,7 +47,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <header className="app-header">
-          <h1>Short It</h1>
+          <h1><a href="/">Short It</a></h1>
         </header>
         <div className="empty-row"></div>
         <div className="app-body">
