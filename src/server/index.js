@@ -32,7 +32,7 @@ app.get('/:urlId', (req, res) => {
       if (hasUrl) {
         res.redirect(301, result[0].longLink);
       } else {
-        res4.status(404).json({status: 'No URL with given ID.'});
+        res.status(404).json({status: 'No URL with given ID.'});
       }
     });
 });

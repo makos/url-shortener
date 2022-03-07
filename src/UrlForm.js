@@ -1,5 +1,5 @@
-import './UrlForm.css';
-import React from 'react';
+import "./UrlForm.css";
+import React from "react";
 
 class UrlForm extends React.Component {
   constructor(props) {
@@ -17,12 +17,15 @@ class UrlForm extends React.Component {
     e.preventDefault();
     this.props.onFormSubmit();
   }
-  
+
   render() {
     return (
-      <form onSubmit={this.handleFormSubmit}> 
-        <input type="text" name="URL" placeholder="URL to shorten"
-               onChange={this.handleFormChange}
+      <form onSubmit={this.handleFormSubmit}>
+        <input
+          type="text"
+          name="URL"
+          placeholder="URL to shorten"
+          onChange={this.handleFormChange}
         />
         <button type="submit">
           <span className="mq-text">Submit</span>

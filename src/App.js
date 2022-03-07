@@ -1,14 +1,14 @@
-import React from 'react';
-import './App.css';
-import UrlForm from './UrlForm.js';
-import Link from './Link.js';
+import React from "react";
+import "./App.css";
+import UrlForm from "./UrlForm.js";
+import Link from "./Link.js";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      longLink: '',
-      shortLink: ''
+      longLink: "",
+      shortLink: "",
     };
 
     this.handleFormChange = this.handleFormChange.bind(this);
@@ -16,28 +16,28 @@ class App extends React.Component {
   }
 
   handleFormChange(link) {
-    this.setState({longLink: link});
+    this.setState({ longLink: link });
   }
 
   handleFormSubmit() {
-    fetch('http://localhost:3001', {
-      method: 'POST',
+    fetch("http://localhost:3001", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({longLink: this.state.longLink}),
+      body: JSON.stringify({ longLink: this.state.longLink }),
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-        this.setState({shortLink: data.shortLink});
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        this.setState({ shortLink: data.shortLink });
       })
       .catch((error) => {
-        console.error('Error:', error);
-        this.setState({shortLink: "Something went wrong. Try again!"});
+        console.error("Error:", error);
+        this.setState({ shortLink: "Something went wrong. Try again!" });
       });
   }
-  
+
   render() {
     return (
       <div className="app">
@@ -46,14 +46,14 @@ class App extends React.Component {
         </header>
         <div className="empty-row"></div>
         <div className="app-body">
-          <Link shortLink={this.state.shortLink} className="link-container"/>
+          <Link shortLink={this.state.shortLink} className="link-container" />
           <UrlForm
             onFormChange={this.handleFormChange}
             onFormSubmit={this.handleFormSubmit}
           />
         </div>
       </div>
-    );    
+    );
   }
 }
 
