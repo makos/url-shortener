@@ -1,5 +1,4 @@
 /* ExpressJS server configuration file. Database stuff etc. */
-
 const process = require('process');
 
 module.exports = {
