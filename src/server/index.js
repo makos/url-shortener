@@ -1,4 +1,3 @@
-const process = require('process');
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
@@ -29,8 +28,8 @@ app.get('/:urlId', (req, res) => {
         return;
       }
       /* The query returns an array even if there's no records. Check if the
-         array has any members (should only ever have one because we use unique primary
-         keys) and then act accordingly. */
+         array has any members (should only ever have one because we use unique 
+         primary keys) and then act accordingly. */
       const hasUrl = result.length;
       if (hasUrl) {
         res.redirect(301, result[0].longLink);
@@ -43,7 +42,7 @@ app.get('/:urlId', (req, res) => {
 app.post('/', (req, res) => {
   /* Validate the URL with node-uri. */
   try {
-    uri.checkWebURL(req.body);
+    uri.checkWebURL(req.body.longLink);
   } catch (uriError) {
     res.status(400).json({shortLink: 'Bad URL, please check your input.'});
     return;
@@ -60,8 +59,11 @@ app.post('/', (req, res) => {
         return;
       }
 
-      if (app.get('dev') === 'development') {
-        const port = ':3001';
+      /* Some QoL for development, add port to the displayed link for easier
+         checking. TODO: remove in production. */
+      let port = ''
+      if (app.get('env') === 'development') {
+        port = ':3001';
       }
       
       res.status(200).json({shortLink: `${req.hostname}${port}/${result.insertId}`});
