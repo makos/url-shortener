@@ -45,7 +45,7 @@ class App extends React.Component {
           <h1>Short It</h1>
         </header>
         <div className="app-body">
-          <Link shortLink={this.state.shortLink}/>
+          <Link shortLink={this.state.shortLink} className="link-container"/>
           <UrlForm
             onFormChange={this.handleFormChange}
             onFormSubmit={this.handleFormSubmit}

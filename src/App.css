@@ -7,27 +7,3 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
 }
-
-.submit-button {
-  display: block;
-  width: 50%;
-  margin-top: 1vh;
-  margin-left: 25%;
-  background-color: #61dafb;
-  border: none;
-  border-radius: 5px;
-  padding: 5px;
-  box-shadow: 1px 1px 5px;
-}
-
-.submit-button:hover {
-  background-color: lightblue;
-  transition: background-color 0.3s;
-}
-
-.url-input {
-  border: none;
-  border-radius: 5px;
-  text-align: center;
-  padding: 5px 10vw;
-}
