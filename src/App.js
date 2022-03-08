@@ -27,19 +27,23 @@ class App extends React.Component {
       },
       body: JSON.stringify({ longLink: this.state.longLink }),
     })
+    /* TODO: Proper error handling. Now, it throws an error without specifying
+       what went wrong - bad URL, server error? Need to check the server response 
+       for that. */
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Server error.");
+          if (response.status === 400) {
+            this.setState({ shortLink: "Bad URL, please check your input." });
+          }                
+          throw new Error("Server returned error code " + response.status);
         }
         return response.json();
       })
       .then((data) => {
-        console.log("Success:", data);
         this.setState({ shortLink: data.shortLink });
       })
       .catch((error) => {
         console.error(error);
-        this.setState({ shortLink: "Server error. Please try again."});
       });
   }
 
