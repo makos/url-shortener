@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const app = express();
 const uri = require('node-uri');
+const base62 = require('base62/lib/ascii');
 
 const config = require('./config.js');
 
@@ -25,9 +26,11 @@ app.use(express.json());
 app.get('/:urlId', (req, res) => {
   /* MariaDB SQL queries via mysql module. */
   /* TODO: Move this out into separate file. */
+  const decoded = base62.decode(req.params.urlId);
+  
   connection.query(
     'SELECT * FROM URLS WHERE ID = ?',
-    [req.params.urlId],
+    [decoded],
     (err, result, fields) => {
       if (err) {
         res.status(500).json({shortLink: 'Server error. Please try again.'});
@@ -71,8 +74,12 @@ app.post('/', (req, res) => {
       if (app.get('env') === 'development') {
         port = ':3001';
       }
+
+      /* Probably expensie to encode every time a query is made; but for
+         low user count should be fine. Later can move this into the database. */
+      const encoded = base62.encode(result.insertId);
       
-      res.status(200).json({shortLink: `${req.hostname}${port}/${result.insertId}`});
+      res.status(200).json({shortLink: `${req.hostname}${port}/${encoded}`});
     }
   );
 });
