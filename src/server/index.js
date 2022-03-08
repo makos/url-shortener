@@ -16,6 +16,12 @@ connection.connect();
 
 app.use(express.json());
 
+/* Quick debug "logger". */
+// app.use((req, res, next) => {
+//   console.log(req.body);
+//   next();
+// });
+
 app.get('/:urlId', (req, res) => {
   /* MariaDB SQL queries via mysql module. */
   /* TODO: Move this out into separate file. */
@@ -44,7 +50,7 @@ app.post('/', (req, res) => {
   try {
     uri.checkWebURL(req.body.longLink);
   } catch (uriError) {
-    res.status(400).json({shortLink: 'Bad URL, please check your input.'});
+    res.status(400).end();
     return;
   }
   /* MariaDB SQL queries via mysql module. */
@@ -55,7 +61,7 @@ app.post('/', (req, res) => {
     (err, result, fields) => {
       /* Error handling. */
       if (err) {
-        res.status(500).json({shortLink: 'Server error. Please try again.'});
+        res.status(500).end();
         return;
       }
 
